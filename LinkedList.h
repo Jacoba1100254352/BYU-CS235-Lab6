@@ -9,25 +9,9 @@
 template<typename T>
 
 class LinkedList : public LinkedListInterface<T> {
-
-private:
-    struct Node{
-        explicit Node(T _value){
-            value = _value;
-            next = NULL;
-        }
-
-        T value;
-        Node *next;
-    };
-
-    Node *head;
-
 public:
     LinkedList() { head = nullptr; }
-
     ~LinkedList() { clear(); }
-
     void insertHead(T value){
         if(head == NULL) head = new Node(value);
         else {
@@ -45,8 +29,6 @@ public:
             head->next = n;
         }
     }
-
-
     void insertTail(T value) {
         if (head == NULL) head = new Node(value);
         else {
@@ -61,7 +43,6 @@ public:
             currentElement->next = new Node(value);// If no duplicates exist insert at end
         }
     }
-
     void insertAfter(T newValue, T insertAfter){
         if(head == NULL) head = new Node(newValue);
         else {
@@ -91,17 +72,17 @@ public:
 //            delete insert;
         }
     }
-
-
     void remove(T value){
         if(head == NULL)
             return;
 
-        if(head->value == value) head = head->next;
+        if(head->value == value)
+            head = head->next;
         else {
             Node *searchAndDestroy = head;
 
-            while(searchAndDestroy->next != NULL && searchAndDestroy->next->value != value) searchAndDestroy = searchAndDestroy->next;
+            while(searchAndDestroy->next != NULL && searchAndDestroy->next->value != value)
+                searchAndDestroy = searchAndDestroy->next;
 
             if(searchAndDestroy->next != NULL) {
                 Node *placeHolder = searchAndDestroy->next;
@@ -111,13 +92,10 @@ public:
             }
         }
     }
-
-
     void clear(){
         while (head != NULL) remove(head->value);
         delete head;
     }
-
     T at(int index) {
         if (index < 0 || index >= size()) {
             throw out_of_range("at " + to_string(index) + " out_of_range at line " + to_string(__LINE__));
@@ -134,8 +112,6 @@ public:
             return (ptr->value);
         }
     }
-
-
     int size() {
         if (head == NULL) return 0;
 
@@ -147,8 +123,6 @@ public:
         }
         return ++listSize;
     }
-
-
     string toString(){
         string theAnswer;
         stringstream ss(theAnswer);
@@ -163,6 +137,17 @@ public:
         return ss.str();
     }
 
+private:
+	struct Node{
+		explicit Node(T _value){
+			value = _value;
+			next = NULL;
+		}
+
+		T value;
+		Node *next;
+	};
+	Node *head;
 
 };
 
